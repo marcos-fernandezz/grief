@@ -1,0 +1,14 @@
+@import "tailwindcss";
+
+@import "tailwindcss";
+
+:root {
+  --background: #000000;
+  --foreground: #ffffff;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: sans-serif; /* Esto después lo cambiamos por la de Grief */
+}
