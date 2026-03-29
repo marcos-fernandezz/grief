@@ -42,7 +42,10 @@ model ProductSize {
 model Order {
   id        String      @id @default(cuid())
   userId    String
+<<<<<<< HEAD
   customerEmail String?
+=======
+>>>>>>> 78a04bec80c4e282bb1a7fd31948a6f5ef1db3a2
   total     Float
   status    OrderStatus @default(PENDING)
   items     OrderItem[]
@@ -67,7 +70,10 @@ model Account {
   type              String
   provider          String
   providerAccountId String
+<<<<<<< HEAD
   refresh_token     String? @db.Text
+=======
+>>>>>>> 78a04bec80c4e282bb1a7fd31948a6f5ef1db3a2
   access_token      String? @db.Text
   expires_at        Int?
   token_type        String?
@@ -99,6 +105,7 @@ model User {
   sessions      Session[]
   orders        Order[]
 }
+<<<<<<< HEAD
 
 model VerificationToken {
   identifier String
@@ -107,3 +114,5 @@ model VerificationToken {
 
   @@unique([identifier, token])
 }
+=======
+>>>>>>> 78a04bec80c4e282bb1a7fd31948a6f5ef1db3a2

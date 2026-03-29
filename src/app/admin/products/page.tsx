@@ -17,6 +17,7 @@ export default async function AdminProductsPage({
     where: {
       ...(currentCategory !== "ALL" ? { category: currentCategory } : {}),
     },
+<<<<<<< HEAD
     include: { sizes: true },
     orderBy: { createdAt: "desc" },
   });
@@ -30,6 +31,15 @@ export default async function AdminProductsPage({
   const totalProducts = productsWithStock.length;
   const outOfStock = productsWithStock.filter((p) => p.totalStock === 0).length;
   const lowStock = productsWithStock.filter((p) => p.totalStock > 0 && p.totalStock <= 5).length;
+=======
+    orderBy: { createdAt: "desc" },
+  });
+
+  // 2. CÁLCULO DE MÉTRICAS RÁPIDAS
+  const totalProducts = products.length;
+  const outOfStock = products.filter((p) => p.stock === 0).length;
+  const lowStock = products.filter((p) => p.stock > 0 && p.stock <= 5).length;
+>>>>>>> 78a04bec80c4e282bb1a7fd31948a6f5ef1db3a2
 
   return (
     <div className="flex flex-col gap-8 animate-in fade-in duration-500 pb-12 pt-10 px-6 max-w-7xl mx-auto">
@@ -109,8 +119,13 @@ export default async function AdminProductsPage({
             </tr>
           </thead>
           <tbody className="divide-y divide-white/5">
+<<<<<<< HEAD
             {productsWithStock.length > 0 ? (
               productsWithStock.map((product) => (
+=======
+            {products.length > 0 ? (
+              products.map((product) => (
+>>>>>>> 78a04bec80c4e282bb1a7fd31948a6f5ef1db3a2
                 <tr key={product.id} className="hover:bg-white/5 transition-colors group">
                   <td className="p-4">
                     <div className="flex items-center gap-3">
@@ -131,6 +146,7 @@ export default async function AdminProductsPage({
                     ${Number(product.price).toLocaleString('es-AR')}
                   </td>
                   <td className="p-4">
+<<<<<<< HEAD
                     {product.totalStock === 0 ? (
                       <span className="flex items-center gap-1 text-red-500 text-[10px] uppercase tracking-widest font-bold bg-red-500/10 px-2 py-1 w-max">
                         <AlertCircle size={12} /> Agotado
@@ -139,6 +155,16 @@ export default async function AdminProductsPage({
                       <span className="text-yellow-500 font-mono bg-yellow-500/10 px-2 py-1">{product.totalStock} un.</span>
                     ) : (
                       <span className="text-neutral-300 font-mono">{product.totalStock} un.</span>
+=======
+                    {product.stock === 0 ? (
+                      <span className="flex items-center gap-1 text-red-500 text-[10px] uppercase tracking-widest font-bold bg-red-500/10 px-2 py-1 w-max">
+                        <AlertCircle size={12} /> Agotado
+                      </span>
+                    ) : product.stock <= 5 ? (
+                      <span className="text-yellow-500 font-mono bg-yellow-500/10 px-2 py-1">{product.stock} un.</span>
+                    ) : (
+                      <span className="text-neutral-300 font-mono">{product.stock} un.</span>
+>>>>>>> 78a04bec80c4e282bb1a7fd31948a6f5ef1db3a2
                     )}
                   </td>
                   <td className="p-4">

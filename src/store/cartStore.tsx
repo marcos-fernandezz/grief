@@ -8,7 +8,10 @@ export interface CartItem {
   price: number;
   image_url: string | null;
   quantity: number;
+<<<<<<< HEAD
   size: string;
+=======
+>>>>>>> 78a04bec80c4e282bb1a7fd31948a6f5ef1db3a2
 }
 
 interface CartStore {
@@ -24,7 +27,11 @@ export const useCartStore = create<CartStore>()(
   persist(
     (set, get) => ({
       items: [],
+<<<<<<< HEAD
 
+=======
+      
+>>>>>>> 78a04bec80c4e282bb1a7fd31948a6f5ef1db3a2
       addItem: (product) => {
         const currentItems = get().items;
         const existingItem = currentItems.find((i) => i.id === product.id);

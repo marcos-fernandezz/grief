@@ -1,4 +1,8 @@
 "use client";
+<<<<<<< HEAD
+=======
+e
+>>>>>>> 78a04bec80c4e282bb1a7fd31948a6f5ef1db3a2
 import { useState, useEffect } from "react";
 import { Plus, X, Upload } from "lucide-react";
 import { createProduct } from "@/actions/products"; 

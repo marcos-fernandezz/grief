@@ -1,11 +1,19 @@
 import { db } from "../../lib/db";
 import Link from "next/link";
+<<<<<<< HEAD
+=======
+import { Product } from "@prisma/client";
+>>>>>>> 78a04bec80c4e282bb1a7fd31948a6f5ef1db3a2
 import NextImage from 'next/image';
 import { ProductWithSizes } from "@/types/product";
 
 export default async function TiendaPage() {
   let products: ProductWithSizes[] = [];
+<<<<<<< HEAD
 
+=======
+  
+>>>>>>> 78a04bec80c4e282bb1a7fd31948a6f5ef1db3a2
   try {
     products = await db.product.findMany({
       orderBy: { createdAt: 'desc' },
@@ -35,6 +43,7 @@ export default async function TiendaPage() {
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-16">
+<<<<<<< HEAD
             {products.map((product: ProductWithSizes) => {
               const totalStock = product.sizes.reduce((acc, s) => acc + s.stock, 0);
               const isSoldOut = totalStock === 0;
@@ -48,6 +57,21 @@ export default async function TiendaPage() {
               return (
                 <Link
                   key={product.id}
+=======
+            {products.map((product) => {
+              const totalStock = product.sizes.reduce((acc: number, s: any) => acc + s.stock, 0);
+              const isSoldOut = totalStock === 0;
+              // Normalizamos las imágenes: nos aseguramos de que sea un Array utilizable
+              const images = Array.isArray(product.images) 
+                ? product.images 
+                : typeof product.images === 'string' 
+                  ? JSON.parse(product.images) 
+                  : [];
+
+              return (
+                <Link 
+                  key={product.id} 
+>>>>>>> 78a04bec80c4e282bb1a7fd31948a6f5ef1db3a2
                   href={`/tienda/${product.slug}`}
                   className="group block"
                 >
@@ -56,11 +80,16 @@ export default async function TiendaPage() {
                     {images.length > 0 ? (
                       <>
                         {/* Imagen Principal */}
+<<<<<<< HEAD
                         <NextImage
+=======
+                        <NextImage 
+>>>>>>> 78a04bec80c4e282bb1a7fd31948a6f5ef1db3a2
                           src={images[0]}
                           alt={product.name}
                           fill
                           sizes="(max-width: 768px) 100vw, 33vw"
+<<<<<<< HEAD
                           className={`object-cover transition-all duration-700 ${images.length > 1 ? "group-hover:opacity-0" : "group-hover:scale-105"
                             }`}
                         />
@@ -68,6 +97,16 @@ export default async function TiendaPage() {
                         {/* Segunda Imagen (Aparece en Hover) */}
                         {images.length > 1 && (
                           <NextImage
+=======
+                          className={`object-cover transition-all duration-700 ${
+                            images.length > 1 ? "group-hover:opacity-0" : "group-hover:scale-105"
+                          }`}
+                        />
+                        
+                        {/* Segunda Imagen (Aparece en Hover) */}
+                        {images.length > 1 && (
+                          <NextImage 
+>>>>>>> 78a04bec80c4e282bb1a7fd31948a6f5ef1db3a2
                             src={images[1]}
                             alt={`${product.name} alt`}
                             fill

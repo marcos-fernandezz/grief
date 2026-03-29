@@ -35,11 +35,10 @@ export default function AddToCartButton({ product }: { product: ProductProps }) 
                 e.preventDefault();
                 setSelectedSize(s.size);
               }}
-              className={`px-4 py-2 border text-xs font-bold transition-all ${
-                selectedSize === s.size 
-                  ? "bg-white text-black border-white" 
+              className={`px-4 py-2 border text-xs font-bold transition-all ${selectedSize === s.size
+                  ? "bg-white text-black border-white"
                   : "bg-transparent text-white border-white/20 hover:border-white"
-              }`}
+                }`}
             >
               {s.size}
             </button>

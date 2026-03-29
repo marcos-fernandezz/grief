@@ -4,6 +4,7 @@ import Link from "next/link";
 export default async function AdminDashboard() {
   // 1. CONSULTAS REALES A LA BASE DE DATOS
   // Buscamos todos los productos para calcular el inventario
+<<<<<<< HEAD
   const products = await db.product.findMany({ include: { sizes: true } });
 
   const totalProducts = products.length;
@@ -12,6 +13,16 @@ export default async function AdminDashboard() {
   // Calculamos el valor total del inventario (Precio * Stock de cada producto)
   const totalInventoryValue = products.reduce(
     (acc, product) => acc + (Number(product.price) * product.sizes.reduce((sum, size) => sum + size.stock, 0)),
+=======
+  const products = await db.product.findMany();
+  
+  const totalProducts = products.length;
+  const outOfStockCount = products.filter(p => p.stock === 0).length;
+  
+  // Calculamos el valor total del inventario (Precio * Stock de cada producto)
+  const totalInventoryValue = products.reduce(
+    (acc, product) => acc + (Number(product.price) * product.stock), 
+>>>>>>> 78a04bec80c4e282bb1a7fd31948a6f5ef1db3a2
     0
   );
 
@@ -37,7 +48,11 @@ export default async function AdminDashboard() {
 
   return (
     <div className="flex flex-col gap-8 animate-in fade-in duration-500 pb-12 pt-24 px-6 max-w-7xl mx-auto">
+<<<<<<< HEAD
 
+=======
+      
+>>>>>>> 78a04bec80c4e282bb1a7fd31948a6f5ef1db3a2
       <header className="flex justify-between items-end border-b border-white/10 pb-6">
         <div>
           <h1 className="text-3xl font-bold uppercase tracking-tighter">Centro de Datos GRIEF®</h1>
@@ -47,7 +62,11 @@ export default async function AdminDashboard() {
 
       {/* KPI CARDS (Métricas Reales) */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> 78a04bec80c4e282bb1a7fd31948a6f5ef1db3a2
         <div className="bg-neutral-950 border border-white/10 p-6 flex flex-col gap-2 hover:border-white/30 transition-colors">
           <span className="text-neutral-500 text-[10px] uppercase tracking-[0.2em] border-b border-white/5 pb-2">
             Valor del Inventario

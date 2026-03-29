@@ -8,8 +8,12 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
   const { slug } = await params; 
 
   const product = await db.product.findUnique({
+<<<<<<< HEAD
     where: { slug },
     include: { sizes: true }
+=======
+    where: { slug }
+>>>>>>> 78a04bec80c4e282bb1a7fd31948a6f5ef1db3a2
   });
 
   if (!product) {
@@ -26,8 +30,11 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
   // Tomamos la primera imagen para el carrito
   const mainImage = imagesArray.length > 0 ? imagesArray[0] : "/placeholder.png";
 
+<<<<<<< HEAD
   const totalStock = product.sizes.reduce((acc, s) => acc + s.stock, 0);
 
+=======
+>>>>>>> 78a04bec80c4e282bb1a7fd31948a6f5ef1db3a2
   return (
     <main className="min-h-screen bg-black text-white pt-40 pb-20 px-8">
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-20 items-start">
@@ -58,14 +65,22 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
           </p>
 
           <div className="pt-6">
+<<<<<<< HEAD
             {totalStock > 0 ? (
+=======
+            {product.stock > 0 ? (
+>>>>>>> 78a04bec80c4e282bb1a7fd31948a6f5ef1db3a2
               <AddToCartButton 
                 product={{
                   id: product.id,
                   name: product.name,
                   price: Number(product.price),
+<<<<<<< HEAD
                   image_url: mainImage,
                   sizes: product.sizes
+=======
+                  image_url: mainImage
+>>>>>>> 78a04bec80c4e282bb1a7fd31948a6f5ef1db3a2
                 }} 
               />
             ) : (
@@ -83,7 +98,11 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
             </div>
             <div>
               <h4 className="text-[9px] uppercase tracking-widest text-neutral-500 mb-2 font-bold">Stock</h4>
+<<<<<<< HEAD
               <p className="text-[10px] text-neutral-400 uppercase">{totalStock} unidades disponibles.</p>
+=======
+              <p className="text-[10px] text-neutral-400 uppercase">{product.stock} unidades disponibles.</p>
+>>>>>>> 78a04bec80c4e282bb1a7fd31948a6f5ef1db3a2
             </div>
           </div>
         </div>
