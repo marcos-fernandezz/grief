@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # GRIEF - Proyecto E-commerce
 
 Este proyecto es una plataforma de e-commerce moderna.
@@ -28,6 +27,3 @@ A continuación se presenta una descripción técnica de todas las funcionalidad
 *   **Portal de Cliente (Mi Perfil/Mis Pedidos)**: Desarrollo de un área privada para los compradores donde puedan visualizar el progreso, estado e historial detallado de sus órdenes de compra.
 *   **CRUD Avanzado de Productos**: Incorporar en el panel admin formularios robustos para la alta, baja y modificación de productos, integrando específicamente la capacidad de carga y manipulación de imágenes en la nube (posible integración con Supabase Storage).
 *   **Validación Transaccional de Stock**: Refinar la acción de checkout para verificar y reservar atómicamente el stock exacto del talle seleccionado (`ProductSize`) justo antes de delegar el proceso al gateway de pagos, previniendo compras concurrentes sin stock.
-=======
-# grief
->>>>>>> 78a04bec80c4e282bb1a7fd31948a6f5ef1db3a2
