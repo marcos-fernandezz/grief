@@ -95,8 +95,9 @@ export async function processOrder(
     }
 
     console.log("🚀 PAYLOAD ENVIADO A MP:", JSON.stringify(paymentBody, null, 2));
+
     // 5. Enviar a Mercado Pago
-    let mpResponse;
+    let mpResponse: any; // 🟢 FIX: Declaramos mpResponse explícitamente como any
     try {
       mpResponse = await payment.create({
         body: paymentBody,
@@ -125,7 +126,7 @@ export async function processOrder(
     if (mpResponse.status === "approved" || mpResponse.status === "in_process" || mpResponse.status === "authorized") {
 
       // DB: Marcamos pagado y descontamos stock real en una única transacción atómica
-      await db.$transaction(async (tx) => {
+      await db.$transaction(async (tx: any) => { // 🟢 FIX: tx tipeado como any explícito
         for (const item of cartItems) {
           await tx.productSize.update({
             where: { productId_size: { productId: item.id, size: item.size } },
