@@ -38,7 +38,7 @@ export async function processOrder(
 
     let totalAmount = 0;
     for (const item of cartItems) {
-      const stockInfo = dbStocks.find(s => s.productId === item.id && s.size === item.size);
+      const stockInfo = dbStocks.find((s: any) => s.productId === item.id && s.size === item.size);
       if (!stockInfo || stockInfo.stock < item.quantity) {
         return { success: false, error: `Sin stock suficiente para: ${item.name} (Talle ${item.size})` };
       }
