@@ -1,11 +1,10 @@
-import Hero from "../components/Hero";
+import HomeClient from "./HomeClient";
+import ProductGrid from "@/components/ProductGrid";
 
-export default function Home() {
+export default function Page() {
   return (
-    <main className="min-h-screen">
-      <Hero />
-      
-      {/* Aquí abajo iremos agregando las siguientes secciones (Productos destacados, etc) */}
-    </main>
+    <HomeClient>
+      <ProductGrid />
+    </HomeClient>
   );
 }

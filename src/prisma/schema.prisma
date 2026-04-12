@@ -3,7 +3,7 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider  = "postgresql"
 }
 
 enum OrderStatus {
@@ -42,10 +42,7 @@ model ProductSize {
 model Order {
   id        String      @id @default(cuid())
   userId    String
-<<<<<<< HEAD
   customerEmail String?
-=======
->>>>>>> 78a04bec80c4e282bb1a7fd31948a6f5ef1db3a2
   total     Float
   status    OrderStatus @default(PENDING)
   items     OrderItem[]
@@ -61,7 +58,7 @@ model OrderItem {
   quantity  Int
   price     Float
   order     Order   @relation(fields: [orderId], references: [id])
-  product   Product @relation(fields: [productId], references: [id])
+  product   Product @relation(fields: [productId], references: [id],onDelete: Cascade)
 }
 
 model Account {
@@ -70,10 +67,7 @@ model Account {
   type              String
   provider          String
   providerAccountId String
-<<<<<<< HEAD
   refresh_token     String? @db.Text
-=======
->>>>>>> 78a04bec80c4e282bb1a7fd31948a6f5ef1db3a2
   access_token      String? @db.Text
   expires_at        Int?
   token_type        String?
@@ -101,11 +95,14 @@ model User {
   emailVerified DateTime?
   image         String?
   role          String    @default("USER") // Para tu lógica de Admin
+
+  password      String?
+  phone         String?   @unique
+
   accounts      Account[]
   sessions      Session[]
   orders        Order[]
 }
-<<<<<<< HEAD
 
 model VerificationToken {
   identifier String
@@ -114,5 +111,3 @@ model VerificationToken {
 
   @@unique([identifier, token])
 }
-=======
->>>>>>> 78a04bec80c4e282bb1a7fd31948a6f5ef1db3a2

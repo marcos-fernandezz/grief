@@ -1,11 +1,7 @@
 "use client";
-<<<<<<< HEAD
-=======
-e
->>>>>>> 78a04bec80c4e282bb1a7fd31948a6f5ef1db3a2
 import { useState, useEffect } from "react";
 import { Plus, X, Upload } from "lucide-react";
-import { createProduct } from "@/actions/products"; 
+import { createProduct } from "@/actions/products";
 import SizeManager from "@/components/admin/SizeManager"; // Asegurate de que la ruta sea correcta
 
 export default function NewProductModal() {
@@ -55,10 +51,10 @@ export default function NewProductModal() {
     formData.append("price", formValues.price);
     formData.append("category", formValues.category);
     formData.append("description", formValues.description);
-    
+
     // 🟢 Inyectamos el JSON de talles que viene del componente SizeManager
     formData.append("sizes", JSON.stringify(sizes));
-    
+
     // 🟢 Adjuntamos las imágenes seleccionadas
     selectedFiles.forEach(file => {
       formData.append("images", file);
@@ -87,7 +83,7 @@ export default function NewProductModal() {
   return (
     <>
       {/* Botón de Apertura */}
-      <button 
+      <button
         onClick={() => setIsOpen(true)}
         className="bg-white text-black px-6 py-3 text-[10px] font-bold uppercase tracking-widest flex items-center gap-2 hover:bg-neutral-200 transition-all border border-white"
       >
@@ -97,20 +93,20 @@ export default function NewProductModal() {
 
       {/* Modal / Sidebar */}
       {isOpen && (
-        <div 
+        <div
           className="fixed inset-0 z-[999] flex justify-end bg-black/90 backdrop-blur-sm transition-opacity"
-          onClick={() => setIsOpen(false)} 
+          onClick={() => setIsOpen(false)}
         >
-          <div 
+          <div
             className="relative w-full max-w-lg bg-black border-l border-white/10 h-full overflow-y-auto animate-in slide-in-from-right duration-300"
-            onClick={(e) => e.stopPropagation()} 
+            onClick={(e) => e.stopPropagation()}
           >
             {/* Header Sticky */}
             <div className="sticky top-0 bg-black/80 backdrop-blur-md border-b border-white/10 p-6 flex justify-between items-center z-20">
               <h2 className="text-xl font-black uppercase tracking-tighter text-white">
                 Gestión de Inventario
               </h2>
-              <button 
+              <button
                 onClick={() => setIsOpen(false)}
                 className="text-neutral-500 hover:text-white transition-colors"
               >
@@ -119,36 +115,36 @@ export default function NewProductModal() {
             </div>
 
             <form onSubmit={handleSubmit} className="p-8 flex flex-col gap-8 pb-32">
-              
+
               {/* Sección: Información Básica */}
               <div className="flex flex-col gap-6">
                 <div className="flex flex-col gap-2">
                   <label className="text-[10px] uppercase tracking-widest text-neutral-500 font-bold">Nombre del Producto</label>
-                  <input 
-                    name="name" 
+                  <input
+                    name="name"
                     value={formValues.name}
                     onChange={handleChange}
-                    placeholder="E.g. VOID HOODIE" 
-                    className="bg-neutral-900/50 p-4 border border-white/10 text-sm text-white focus:outline-none focus:border-white/40 transition-all" 
-                    required 
+                    placeholder="E.g. VOID HOODIE"
+                    className="bg-neutral-900/50 p-4 border border-white/10 text-sm text-white focus:outline-none focus:border-white/40 transition-all"
+                    required
                   />
                 </div>
 
                 <div className="flex flex-col gap-2">
                   <label className="text-[10px] uppercase tracking-widest text-neutral-500 font-bold">URL Slug</label>
-                  <input 
-                    name="slug" 
+                  <input
+                    name="slug"
                     value={formValues.slug}
                     onChange={handleChange}
-                    placeholder="void-hoodie-01" 
-                    className="bg-neutral-900/50 p-4 border border-white/10 text-sm text-white font-mono focus:outline-none focus:border-white/40 transition-all" 
-                    required 
+                    placeholder="void-hoodie-01"
+                    className="bg-neutral-900/50 p-4 border border-white/10 text-sm text-white font-mono focus:outline-none focus:border-white/40 transition-all"
+                    required
                   />
                 </div>
 
                 <div className="flex flex-col gap-2">
                   <label className="text-[10px] uppercase tracking-widest text-neutral-500 font-bold">Descripción del Concepto</label>
-                  <textarea 
+                  <textarea
                     name="description"
                     value={formValues.description}
                     onChange={handleChange}
@@ -162,20 +158,20 @@ export default function NewProductModal() {
               <div className="grid grid-cols-2 gap-6">
                 <div className="flex flex-col gap-2">
                   <label className="text-[10px] uppercase tracking-widest text-neutral-500 font-bold">Precio (ARS)</label>
-                  <input 
-                    name="price" 
-                    type="number" 
+                  <input
+                    name="price"
+                    type="number"
                     value={formValues.price}
                     onChange={handleChange}
-                    placeholder="0.00" 
-                    className="bg-neutral-900/50 p-4 border border-white/10 text-sm text-white font-mono focus:outline-none focus:border-white/40" 
-                    required 
+                    placeholder="0.00"
+                    className="bg-neutral-900/50 p-4 border border-white/10 text-sm text-white font-mono focus:outline-none focus:border-white/40"
+                    required
                   />
                 </div>
 
                 <div className="flex flex-col gap-2">
                   <label className="text-[10px] uppercase tracking-widest text-neutral-500 font-bold">Categoría</label>
-                  <select 
+                  <select
                     name="category"
                     value={formValues.category}
                     onChange={handleChange}
@@ -196,24 +192,24 @@ export default function NewProductModal() {
               {/* Sección: Multimedia */}
               <div className="flex flex-col gap-2">
                 <label className="text-[10px] uppercase tracking-widest text-neutral-500 font-bold">Imágenes del Drop</label>
-                <input 
+                <input
                   id="image-upload"
-                  type="file" 
-                  multiple 
+                  type="file"
+                  multiple
                   accept="image/*"
                   onChange={handleFileChange}
                   className="hidden"
                   required={selectedFiles.length === 0}
                 />
-                <label 
+                <label
                   htmlFor="image-upload"
                   className="flex flex-col items-center justify-center gap-4 bg-neutral-900/30 border-2 border-dashed border-white/10 p-10 cursor-pointer hover:border-white/30 transition-all group"
                 >
                   <Upload className="text-neutral-600 group-hover:text-white transition-colors" size={32} />
                   <div className="text-center">
                     <p className="text-sm text-white font-medium">
-                      {selectedFiles.length > 0 
-                        ? `${selectedFiles.length} archivos seleccionados` 
+                      {selectedFiles.length > 0
+                        ? `${selectedFiles.length} archivos seleccionados`
                         : "Seleccionar archivos"}
                     </p>
                     <p className="text-[10px] text-neutral-500 uppercase mt-1 tracking-widest">
@@ -224,8 +220,8 @@ export default function NewProductModal() {
               </div>
 
               {/* Botón de Acción Principal */}
-              <button 
-                type="submit" 
+              <button
+                type="submit"
                 disabled={loading}
                 className="w-full bg-white text-black font-black py-6 uppercase tracking-[0.3em] text-xs hover:bg-neutral-200 transition-all disabled:opacity-30 disabled:cursor-not-allowed sticky bottom-0 z-30 shadow-[0_-20px_40px_rgba(0,0,0,0.8)]"
               >

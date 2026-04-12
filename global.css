@@ -1,0 +1,39 @@
+@keyframes subtle-float {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(10px);
+    }
+}
+
+.animate-float {
+    animation: subtle-float 2s ease-in-out infinite;
+}
+
+/* src/app/globals.css */
+
+@layer utilities {
+    @keyframes flicker {
+
+        0%,
+        100% {
+            opacity: 0.1;
+        }
+
+        /* Estado gris clarito */
+        50% {
+            opacity: 0.3;
+        }
+
+        /* Titileo sutil */
+    }
+
+    /* duration 3s para que sea un titileo lento y brutalista */
+    .animate-flicker {
+        animation: flicker 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+}

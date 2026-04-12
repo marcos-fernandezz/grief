@@ -1,7 +1,9 @@
 import { db } from "@/lib/db";
 import Link from "next/link";
-import { Plus, Search, Edit2, AlertCircle } from "lucide-react";
+import { Plus, Search, Edit2, AlertCircle, Trash2 } from "lucide-react";
 import NewProductModal from "./NewProductModal";
+import DeleteProductButton from "@/components/admin/DeleteProductButton";
+import EditProductButton from "@/components/admin/EditProductButton";
 
 
 export default async function AdminProductsPage({
@@ -17,7 +19,6 @@ export default async function AdminProductsPage({
     where: {
       ...(currentCategory !== "ALL" ? { category: currentCategory } : {}),
     },
-<<<<<<< HEAD
     include: { sizes: true },
     orderBy: { createdAt: "desc" },
   });
@@ -31,19 +32,10 @@ export default async function AdminProductsPage({
   const totalProducts = productsWithStock.length;
   const outOfStock = productsWithStock.filter((p) => p.totalStock === 0).length;
   const lowStock = productsWithStock.filter((p) => p.totalStock > 0 && p.totalStock <= 5).length;
-=======
-    orderBy: { createdAt: "desc" },
-  });
-
-  // 2. CÁLCULO DE MÉTRICAS RÁPIDAS
-  const totalProducts = products.length;
-  const outOfStock = products.filter((p) => p.stock === 0).length;
-  const lowStock = products.filter((p) => p.stock > 0 && p.stock <= 5).length;
->>>>>>> 78a04bec80c4e282bb1a7fd31948a6f5ef1db3a2
 
   return (
     <div className="flex flex-col gap-8 animate-in fade-in duration-500 pb-12 pt-10 px-6 max-w-7xl mx-auto">
-      
+
       {/* HEADER Y BOTÓN NUEVO */}
       <header className="flex justify-between items-end border-b border-white/10 pb-6">
         <div>
@@ -52,7 +44,7 @@ export default async function AdminProductsPage({
             Gestión de catálogo y métricas de producto
           </p>
         </div>
-        
+
         <NewProductModal />
       </header>
 
@@ -75,20 +67,20 @@ export default async function AdminProductsPage({
       {/* BARRA DE FILTROS Y BÚSQUEDA */}
       <div className="flex justify-between items-center bg-neutral-950 border border-white/10 p-4">
         <div className="flex gap-4 text-[10px] uppercase tracking-widest font-bold">
-          <Link 
-            href="/admin/products" 
+          <Link
+            href="/admin/products"
             className={`${currentCategory === "ALL" ? "text-white" : "text-neutral-600 hover:text-white"}`}
           >
             Todos
           </Link>
-          <Link 
-            href="/admin/products?category=TOPS" 
+          <Link
+            href="/admin/products?category=TOPS"
             className={`${currentCategory === "TOPS" ? "text-white" : "text-neutral-600 hover:text-white"}`}
           >
             Tops
           </Link>
-          <Link 
-            href="/admin/products?category=BOTTOMS" 
+          <Link
+            href="/admin/products?category=BOTTOMS"
             className={`${currentCategory === "BOTTOMS" ? "text-white" : "text-neutral-600 hover:text-white"}`}
           >
             Bottoms
@@ -97,9 +89,9 @@ export default async function AdminProductsPage({
 
         <div className="relative">
           <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-500" />
-          <input 
-            type="text" 
-            placeholder="BUSCAR PRODUCTO..." 
+          <input
+            type="text"
+            placeholder="BUSCAR PRODUCTO..."
             className="bg-transparent border border-white/10 text-white text-[10px] uppercase tracking-widest py-2 pl-9 pr-4 focus:outline-none focus:border-white/30 w-64"
           />
         </div>
@@ -119,13 +111,8 @@ export default async function AdminProductsPage({
             </tr>
           </thead>
           <tbody className="divide-y divide-white/5">
-<<<<<<< HEAD
             {productsWithStock.length > 0 ? (
               productsWithStock.map((product) => (
-=======
-            {products.length > 0 ? (
-              products.map((product) => (
->>>>>>> 78a04bec80c4e282bb1a7fd31948a6f5ef1db3a2
                 <tr key={product.id} className="hover:bg-white/5 transition-colors group">
                   <td className="p-4">
                     <div className="flex items-center gap-3">
@@ -146,7 +133,6 @@ export default async function AdminProductsPage({
                     ${Number(product.price).toLocaleString('es-AR')}
                   </td>
                   <td className="p-4">
-<<<<<<< HEAD
                     {product.totalStock === 0 ? (
                       <span className="flex items-center gap-1 text-red-500 text-[10px] uppercase tracking-widest font-bold bg-red-500/10 px-2 py-1 w-max">
                         <AlertCircle size={12} /> Agotado
@@ -155,16 +141,6 @@ export default async function AdminProductsPage({
                       <span className="text-yellow-500 font-mono bg-yellow-500/10 px-2 py-1">{product.totalStock} un.</span>
                     ) : (
                       <span className="text-neutral-300 font-mono">{product.totalStock} un.</span>
-=======
-                    {product.stock === 0 ? (
-                      <span className="flex items-center gap-1 text-red-500 text-[10px] uppercase tracking-widest font-bold bg-red-500/10 px-2 py-1 w-max">
-                        <AlertCircle size={12} /> Agotado
-                      </span>
-                    ) : product.stock <= 5 ? (
-                      <span className="text-yellow-500 font-mono bg-yellow-500/10 px-2 py-1">{product.stock} un.</span>
-                    ) : (
-                      <span className="text-neutral-300 font-mono">{product.stock} un.</span>
->>>>>>> 78a04bec80c4e282bb1a7fd31948a6f5ef1db3a2
                     )}
                   </td>
                   <td className="p-4">
@@ -174,13 +150,8 @@ export default async function AdminProductsPage({
                     </div>
                   </td>
                   <td className="p-4 text-right">
-                    <Link 
-                      href={`/admin/products/${product.id}/edit`}
-                      className="inline-flex items-center justify-center p-2 text-neutral-500 hover:text-white hover:bg-white/10 transition-colors rounded-sm"
-                      title="Editar Producto"
-                    >
-                      <Edit2 size={16} />
-                    </Link>
+                    <EditProductButton product={product} />
+                    <DeleteProductButton id={product.id} name={product.name} />
                   </td>
                 </tr>
               ))
