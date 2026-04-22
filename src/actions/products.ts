@@ -15,7 +15,7 @@ export async function createProduct(formData: FormData) {
 
   // 1. Validación de talles para evitar que JSON.parse rompa la ejecución
   const rawSizes = formData.get("sizes") as string;
-  let sizesData = [];
+  let sizesData: any[] = [];
 
   try {
     sizesData = rawSizes ? JSON.parse(rawSizes) : [];
@@ -122,10 +122,11 @@ export async function deleteProduct(id: string) {
     return { success: false, error: error.message || "No se pudo eliminar el producto" };
   }
 }
+
 export async function updateProduct(id: string, data: any) {
   try {
     // Usamos una transacción con un timeout extendido para evitar el P2028
-    await db.$transaction(async (tx) => {
+    await db.$transaction(async (tx: any) => { // 🟢 FIX: tx explícito como any
       // 1. Actualización de datos básicos
       await tx.product.update({
         where: { id },

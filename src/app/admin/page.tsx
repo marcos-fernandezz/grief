@@ -7,11 +7,13 @@ export default async function AdminDashboard() {
   const products = await db.product.findMany({ include: { sizes: true } });
 
   const totalProducts = products.length;
-  const outOfStockCount = products.filter(p => p.sizes.reduce((sum, size) => sum + size.stock, 0) === 0).length;
+  // 🟢 FIX: Agregamos tipado explícito a 'p', 'sum' y 'size'
+  const outOfStockCount = products.filter((p: any) => p.sizes.reduce((sum: number, size: any) => sum + size.stock, 0) === 0).length;
 
   // Calculamos el valor total del inventario (Precio * Stock de cada producto)
+  // 🟢 FIX: Agregamos tipado explícito a 'acc', 'product', 'sum' y 'size'
   const totalInventoryValue = products.reduce(
-    (acc, product) => acc + (Number(product.price) * product.sizes.reduce((sum, size) => sum + size.stock, 0)),
+    (acc: number, product: any) => acc + (Number(product.price) * product.sizes.reduce((sum: number, size: any) => sum + size.stock, 0)),
     0
   );
 
@@ -108,7 +110,8 @@ export default async function AdminDashboard() {
             </thead>
             <tbody className="divide-y divide-white/5">
               {recentOrders.length > 0 ? (
-                recentOrders.map((order) => (
+                /* 🟢 FIX: Agregamos tipado explícito a 'order' */
+                recentOrders.map((order: any) => (
                   <tr key={order.id} className="hover:bg-white/5 transition-colors">
                     <td className="p-4 font-mono text-white">#{order.id.slice(-6).toUpperCase()}</td>
                     <td className="p-4 text-neutral-500">{new Date(order.createdAt).toLocaleDateString('es-AR')}</td>

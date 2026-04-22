@@ -5,14 +5,24 @@ const config: Config = {
         "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
         "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
         "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
-        // Asegurate de que cubra la carpeta donde tenés tus componentes
     ],
     theme: {
         extend: {
-            // ... tus extensiones existentes
+            // Podés configurar tu fuente acá si importás Google Fonts en tu layout
+            fontFamily: {
+                sans: ['var(--font-inter)', 'sans-serif'],
+            },
+            keyframes: {
+                flicker: {
+                    '0%, 100%': { opacity: '1' },
+                    '50%': { opacity: '0.4' },
+                }
+            },
+            animation: {
+                flicker: 'flicker 2s ease-in-out infinite',
+            }
         },
     },
-    // 👇 AQUÍ ESTÁ LA SOLUCIÓN 👇
     plugins: [
         require("tailwindcss-animate"),
     ],

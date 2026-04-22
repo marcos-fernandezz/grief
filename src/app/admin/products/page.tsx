@@ -5,7 +5,6 @@ import NewProductModal from "./NewProductModal";
 import DeleteProductButton from "@/components/admin/DeleteProductButton";
 import EditProductButton from "@/components/admin/EditProductButton";
 
-
 export default async function AdminProductsPage({
   searchParams,
 }: {
@@ -23,15 +22,16 @@ export default async function AdminProductsPage({
     orderBy: { createdAt: "desc" },
   });
 
-  const productsWithStock = products.map(p => ({
+  const productsWithStock = products.map((p: any) => ({
     ...p,
-    totalStock: p.sizes.reduce((acc, s) => acc + s.stock, 0)
+    totalStock: p.sizes.reduce((acc: number, s: any) => acc + s.stock, 0)
   }));
 
   // 2. CÁLCULO DE MÉTRICAS RÁPIDAS
+  // 🟢 FIX: Agregamos tipado explícito a 'p' en los filters
   const totalProducts = productsWithStock.length;
-  const outOfStock = productsWithStock.filter((p) => p.totalStock === 0).length;
-  const lowStock = productsWithStock.filter((p) => p.totalStock > 0 && p.totalStock <= 5).length;
+  const outOfStock = productsWithStock.filter((p: any) => p.totalStock === 0).length;
+  const lowStock = productsWithStock.filter((p: any) => p.totalStock > 0 && p.totalStock <= 5).length;
 
   return (
     <div className="flex flex-col gap-8 animate-in fade-in duration-500 pb-12 pt-10 px-6 max-w-7xl mx-auto">
@@ -112,12 +112,12 @@ export default async function AdminProductsPage({
           </thead>
           <tbody className="divide-y divide-white/5">
             {productsWithStock.length > 0 ? (
-              productsWithStock.map((product) => (
+              /* 🟢 FIX: Agregamos tipado explícito a 'product' */
+              productsWithStock.map((product: any) => (
                 <tr key={product.id} className="hover:bg-white/5 transition-colors group">
                   <td className="p-4">
                     <div className="flex items-center gap-3">
                       <div className="w-10 h-10 bg-neutral-900 border border-white/10 flex items-center justify-center">
-                        {/* Aquí iría la imagen <Image /> */}
                         <span className="text-[8px] text-neutral-600">FOTO</span>
                       </div>
                       <div className="flex flex-col">

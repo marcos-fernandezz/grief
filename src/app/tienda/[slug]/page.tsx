@@ -26,7 +26,8 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
   // Tomamos la primera imagen para el carrito
   const mainImage = imagesArray.length > 0 ? imagesArray[0] : "/placeholder.png";
 
-  const totalStock = product.sizes.reduce((acc, s) => acc + s.stock, 0);
+  // 🟢 FIX: Agregamos tipado explícito a 'acc' y 's'
+  const totalStock = product.sizes.reduce((acc: number, s: any) => acc + s.stock, 0);
 
   return (
     <main className="min-h-screen bg-black text-white pt-40 pb-20 px-8">

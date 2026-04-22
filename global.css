@@ -1,3 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* FORZAMOS EL FONDO BLANCO COMO BASE DE TODA LA APP */
+body {
+    background-color: #ffffff;
+    color: #000000;
+}
+
 @keyframes subtle-float {
 
     0%,
