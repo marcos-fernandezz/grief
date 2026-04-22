@@ -20,7 +20,7 @@ export default function RootLayout({
     <html lang="es">
       <body className={`${inter.className} antialiased bg-white text-black`}>
         <Providers> {/* Envolvemos toda la app */}
-          <Suspense>
+          <Suspense fallback={<div className="h-12 bg-white"></div>}>
             <Menu />
           </Suspense>
           {children}

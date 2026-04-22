@@ -16,7 +16,7 @@
 # variables de entorno
 .env
 .env*.local
-
+backup.env.local
 # vercel
 .vercel
 
