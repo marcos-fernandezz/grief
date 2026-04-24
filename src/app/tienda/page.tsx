@@ -2,22 +2,36 @@ import { db } from "../../lib/db";
 import Link from "next/link";
 import NextImage from 'next/image';
 
-// 1. Tipamos searchParams como una Promesa
+// 1. Definimos el mapeador fuera del componente para que sea fácil de mantener
+// La llave (pantalones) es lo que viene en la URL, el valor (BOTTOMS) es lo que está en Supabase
+const CATEGORY_MAP: Record<string, string> = {
+  "pantalones": "BOTTOMS",
+  "remeras": "TOPS",
+  "buzos": "HOODIES",
+  "accesorios": "ACCESSORIES",
+};
+
 export default async function TiendaPage({
   searchParams,
 }: {
   searchParams: Promise<{ q?: string; categoria?: string; coleccion?: string }>;
 }) {
 
-  // 👇 ESTA ES LA LÍNEA MÁGICA: Desenvolvemos la Promesa 👇
   const params = await searchParams;
+
+  // 👇 TRADUCCIÓN LÓGICA 👇
+  // Si existe categoria, intentamos buscar su equivalente en el mapa. 
+  // Usamos .toLowerCase() para que no importe si la URL viene con mayúsculas.
+  const rawCategory = params.categoria;
+  const dbCategory = rawCategory
+    ? (CATEGORY_MAP[rawCategory.toLowerCase()] || rawCategory)
+    : undefined;
 
   let products: any[] = [];
 
   try {
     const whereClause: any = {};
 
-    // 2. Ahora usamos "params" en vez de "searchParams"
     if (params.q) {
       whereClause.name = {
         contains: params.q,
@@ -25,9 +39,10 @@ export default async function TiendaPage({
       };
     }
 
-    if (params.categoria) {
+    // 2. Usamos dbCategory (la traducida) para la consulta a Prisma
+    if (dbCategory) {
       whereClause.category = {
-        equals: params.categoria,
+        equals: dbCategory,
         mode: "insensitive",
       };
     }
@@ -50,7 +65,7 @@ export default async function TiendaPage({
     console.error("Error conectando a la DB:", error);
   }
 
-  // 3. También usamos "params" para el título
+  // 3. Para el título usamos el nombre "lindo" (params.categoria)
   const pageTitle = params.q
     ? `Resultados para "${params.q}"`
     : params.categoria
@@ -72,11 +87,11 @@ export default async function TiendaPage({
         </header>
 
         {products.length === 0 ? (
-          <div className="py-20 text-center border border-white/10">
+          <div className="py-20 text-center border border-black/10">
             <p className="text-sm uppercase tracking-widest text-gray-400">
               No se hallaron productos que coincidan con tu búsqueda.
             </p>
-            <Link href="/tienda" className="inline-block mt-4 text-xs font-bold uppercase tracking-widest border-b border-white pb-1 hover:text-gray-400 hover:border-gray-400 transition-colors">
+            <Link href="/tienda" className="inline-block mt-4 text-xs font-bold uppercase tracking-widest border-b border-black pb-1 hover:text-gray-400 hover:border-gray-400 transition-colors">
               Ver todo el catálogo
             </Link>
           </div>
@@ -85,6 +100,7 @@ export default async function TiendaPage({
             {products.map((product: any) => {
               const totalStock = product.sizes.reduce((acc: number, s: any) => acc + s.stock, 0);
               const isSoldOut = totalStock === 0;
+
               const images = Array.isArray(product.images)
                 ? product.images
                 : typeof product.images === 'string'
@@ -92,12 +108,8 @@ export default async function TiendaPage({
                   : [];
 
               return (
-                <Link
-                  key={product.id}
-                  href={`/tienda/${product.slug}`}
-                  className="group block"
-                >
-                  <div className="aspect-[3/4] bg-neutral-900 overflow-hidden relative border border-white/5">
+                <Link key={product.id} href={`/tienda/${product.slug}`} className="group block">
+                  <div className="aspect-[3/4] bg-neutral-900 overflow-hidden relative border border-black/5">
                     {images.length > 0 ? (
                       <>
                         <NextImage
@@ -105,10 +117,8 @@ export default async function TiendaPage({
                           alt={product.name}
                           fill
                           sizes="(max-width: 768px) 100vw, 33vw"
-                          className={`object-cover transition-all duration-700 ${images.length > 1 ? "group-hover:opacity-0" : "group-hover:scale-105"
-                            }`}
+                          className={`object-cover transition-all duration-700 ${images.length > 1 ? "group-hover:opacity-0" : "group-hover:scale-105"}`}
                         />
-
                         {images.length > 1 && (
                           <NextImage
                             src={images[1]}
@@ -122,9 +132,8 @@ export default async function TiendaPage({
                     ) : (
                       <div className="absolute inset-0 bg-neutral-800" />
                     )}
-
                     {isSoldOut && (
-                      <span className="absolute top-4 right-4 bg-white text-black text-[9px] font-black px-2 py-1 uppercase z-20">
+                      <span className="absolute top-4 right-4 bg-black text-white text-[9px] font-black px-2 py-1 uppercase z-20">
                         Sold Out
                       </span>
                     )}
