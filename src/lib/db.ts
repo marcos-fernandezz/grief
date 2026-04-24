@@ -2,28 +2,32 @@ import { PrismaClient } from '@prisma/client'
 import { Pool } from 'pg'
 import { PrismaPg } from '@prisma/adapter-pg'
 
-const connectionString = process.env.DATABASE_URL
-
-// 🟢 CREAMOS EL POOL DENTRO DEL SINGLETON TAMBIÉN
 const globalForPrisma = globalThis as unknown as {
   prisma: PrismaClient | undefined
-  pool: Pool | undefined
 }
 
-const pool = globalForPrisma.pool ?? new Pool({
-  connectionString,
-  ssl: { rejectUnauthorized: false },
-  max: 10, // 👈 Limitamos a 10 conexiones para no saturar la DB
-  idleTimeoutMillis: 30000,
-})
+function createPrismaClient() {
+  const connectionString = process.env.DATABASE_URL
 
-if (process.env.NODE_ENV !== 'production') globalForPrisma.pool = pool
+  if (!connectionString) {
+    throw new Error('DATABASE_URL is not defined')
+  }
 
-const adapter = new PrismaPg(pool)
+  const pool = new Pool({
+    connectionString,
+    ssl: { rejectUnauthorized: false },
+    max: 10,
+    idleTimeoutMillis: 30000,
+  })
 
-export const db = globalForPrisma.prisma ?? new PrismaClient({
-  adapter,
-  log: process.env.NODE_ENV === 'development' ? ['error', 'warn'] : ['error'],
-})
-console.log("Instanciando DB Client...");
+  const adapter = new PrismaPg(pool)
+
+  return new PrismaClient({
+    adapter,
+    log: process.env.NODE_ENV === 'development' ? ['error', 'warn'] : ['error'],
+  })
+}
+
+export const db = globalForPrisma.prisma ?? createPrismaClient()
+
 if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = db
