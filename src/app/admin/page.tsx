@@ -1,6 +1,6 @@
 import { db } from "@/lib/db";
 import Link from "next/link";
-
+export const dynamic = 'force-dynamic';
 export default async function AdminDashboard() {
   // 1. CONSULTAS REALES A LA BASE DE DATOS
   // Buscamos todos los productos para calcular el inventario
