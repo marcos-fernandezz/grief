@@ -47,40 +47,27 @@ export default async function ProductGrid({ searchParams }: { searchParams?: any
                         Colección // 01
                     </h2>
                 </div>
-
-                {/* Agregamos una animación de entrada para que aparezcan suavemente */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 animate-in fade-in slide-in-from-bottom-10 duration-1000 delay-300 fill-mode-both">
-                    {/* 🟢 FIX: Le clavamos el tipo any al map */}
-                    {products.map((product: any) => {
-
-                        // 🟢 FIX: Normalizamos el array de imágenes para que no llore al buscar [0]
-                        const images = Array.isArray(product.images)
-                            ? product.images
-                            : typeof product.images === 'string'
-                                ? JSON.parse(product.images)
-                                : [];
-
-                        return (
-                            <Link key={product.id} href={`/tienda/${product.slug}`} className="group flex flex-col">
-                                <div className="aspect-[3/4] bg-neutral-100 mb-6 overflow-hidden relative">
-                                    {/* 🟢 FIX: Usamos la variable images que acabamos de crear */}
-                                    {images[0] && (
-                                        <img
-                                            src={images[0]}
-                                            alt={product.name}
-                                            className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-700"
-                                        />
-                                    )}
-                                </div>
-                                <div className="flex flex-col gap-1">
-                                    <h3 className="text-[11px] font-black uppercase tracking-wider">{product.name}</h3>
-                                    <p className="text-[10px] text-black font-medium">$ {Number(product.price).toLocaleString('es-AR')}</p>
-                                </div>
-                            </Link>
-                        );
-                    })}
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-6 gap-y-10 w-full">
+                    {products.map((product) => (
+                        <Link key={product.id} href={`/tienda/${product.slug}`} className="group flex flex-col w-full">
+                            <div className="aspect-[3/4] bg-neutral-100 mb-4 overflow-hidden relative w-full">
+                                {product.images[0] && (
+                                    <img
+                                        src={product.images[0]}
+                                        alt={product.name}
+                                        className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-700"
+                                    />
+                                )}
+                            </div>
+                            <div className="flex flex-col gap-1">
+                                <h3 className="text-[11px] font-black uppercase tracking-wider">{product.name}</h3>
+                                <p className="text-[10px] text-black font-medium">$ {Number(product.price).toLocaleString('es-AR')}</p>
+                            </div>
+                        </Link>
+                    ))}
                 </div>
-            </div>
+                {/* Agregamos una animación de entrada para que aparezcan suavemente */}
+                /</div>
         </section>
-    );
+    )
 }
