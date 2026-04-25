@@ -28,5 +28,5 @@ export default async function middleware(req: NextRequest) { // Cambié el nombr
 }
 
 export const config = {
-  matcher: ["/admin/:path*"],
+  matcher: ["/admin", "/admin/:path*"],
 };

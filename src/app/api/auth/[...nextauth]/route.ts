@@ -101,7 +101,7 @@ export const authOptions: NextAuthOptions = {
         token.email = (user as any).email;
       }
       const identifier = token.email || token.phone || "Usuario sin identificador";
-      console.log("🎟️ TOKEN CREADO PARA:", identifier, "ROL:", token.role);
+      console.log("🎟️ RADAR JWT - Email:", token.email, "Rol en Token:", token.role);
       return token;
     },
     async session({ session, token }) {
